@@ -1,5 +1,5 @@
 Steps to use:
-1. download and import this library to your project: `https://github.com/sijanstu/NepseAPI/releases/download/LiveNepseV.1.0/NepseAPI-Sijan-V.1.0.jar`
+1. download and import this library to your project: [https://github.com/sijanstu/NepseAPI/releases/download/LiveNepseV.1.0/NepseAPI-Sijan-V.1.0.jar](url)
 2. download and import jsoup libray from:
  [https://jsoup.org/download](url) 
  
