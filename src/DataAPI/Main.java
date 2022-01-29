@@ -2,6 +2,7 @@
 package DataAPI;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ public class Main {
     public static void main(String[] args) {
         startAPI();
         checkArgs(args);
+        System.out.println(Arrays.toString(API.getAllcompany()));
 
     }
 
@@ -49,7 +51,7 @@ public class Main {
                     }
                 }
                 case "all" -> {
-                    API.displayaAll();
+                    API.getAllcompany();
                 }
                 case default -> {
                     System.out.println("Wrong arguement");
