@@ -1,8 +1,8 @@
 Steps to start:
 
-1. download and import this library to your project : https://github.com/sijanstu/NepseAPI/releases/download/LiveNepseV.1.0/NepseAPI-Sijan-V.1.0.jar
-2. download and import jsoup libray from:
-https://jsoup.org/download
+1. download and import this library to your project :
+https://github.com/sijanstu/NepseAPI/releases/download/LiveNepseV.1.0/NepseAPI-Sijan-V.1.0.jar. 
+2. download and import jsoup libray from:https://jsoup.org/download
 
 guides for setup::
 
