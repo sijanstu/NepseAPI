@@ -13,7 +13,10 @@ public class Main {
     public static void main(String[] args) {
         startAPI();
         checkArgs(args);
-        System.out.println(Arrays.toString(API.getAllcompany()));
+        API.getBySymbol("jblb", true);
+        for(String comp : API.getAllcompany()){
+            
+        }
 
     }
 
