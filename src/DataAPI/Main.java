@@ -13,9 +13,9 @@ public class Main {
     public static void main(String[] args) {
         startAPI();
         checkArgs(args);
-        API.getBySymbol("jblb", true);
-        for(String comp : API.getAllcompany()){
+        for (String comp : API.getAllcompany()) {
             
+            API.getBySymbol(comp, true);
         }
 
     }
@@ -43,11 +43,11 @@ public class Main {
                 case "search" -> {
                     if (arg.length > 1) {
                         if (arg.length > 2) {
-                             if (arg[2].equals("GUI")) {
-                            API.getBySymbol(arg[1],true);
+                            if (arg[2].equals("GUI")) {
+                                API.getBySymbol(arg[1], true);
                             }
-                        }else{
-                            API.getBySymbol(arg[1],false);
+                        } else {
+                            API.getBySymbol(arg[1], false);
                         }
                     } else {
                         System.out.println("plese enter symbol after search");
