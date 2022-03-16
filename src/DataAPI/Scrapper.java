@@ -1,58 +1,60 @@
-//By Sijan Bhandari
 package DataAPI;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-public class NepseAPI {
-    //static final Constants
-    private static final int TIMEOUT = 10000;
-    private static URL url;
-    //static variables
+
+/**
+ *
+ * @author Sijan Bhandari
+ */
+public class Scrapper {
+
     private static Document page;
     private static Element table;
     public static Elements head, company, row;
 
-    public NepseAPI() throws MalformedURLException {
-        url = new URL("https://www.nepalipaisa.com/StockLive.aspx");
-    }
-    
-
-    public boolean isMarketOpen() {
-        String closed = page.getElementsByClass("marketclose").get(0).text();
-        return !closed.equals("Market Closed");
-    }
-
-    public String[] getHeader() {
-        String[] data = new String[10];
-        head = table.select("th");
-        for (int i = 0; i < head.size(); i++) {
-            data[i] = head.get(i).text();
+    public static void main(String[] args) {
+        try {
+            URL url = new URL("https://www.nepalipaisa.com/StockLive.aspx");
+            page = Jsoup.parse(url, 10000);
+            table = page.getElementById("tbl_LiveStock");
+            row = page.getElementsByTag("tr");
+            String[] data = new String[row.size() - 1];
+            for (int i = 1; i < row.size(); i++) {
+                data[i - 1] = row.get(i).getElementsByTag("td").get(0).text();
+            }
+            for (String sym : data) {
+                displayCompany(sym);
+            }
+            
+            System.out.println();
+            System.out.println("Positive: "+positive);
+            System.out.println("Negative: "+negative);
+            System.out.println("Neutral: "+neutral);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Scrapper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Scrapper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Scrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return data;
     }
+    static int positive = 0;
+    static int negative = 0;
+    static int neutral = 0;
 
-    public void startPage() throws MalformedURLException, IOException {
-        page = Jsoup.parse(url, TIMEOUT);
-        table = page.getElementById("tbl_LiveStock");
-        row = page.getElementsByTag("tr");
-        // System.out.println(row);
-    }
-    public String[] getAllcompany(){
-        String[] data = new String[row.size()-1];
-        for (int i = 1; i < row.size(); i++) {
-        data[i-1] = row.get(i).getElementsByTag("td").get(0).text();
-        }
-        return data;
-    }
-    public String[] getBySymbol(String sym, boolean gui) {
+    static void displayCompany(String sym) throws ParseException {
         String[] data = new String[10];
         for (int i = 1; i < row.size(); i++) {
-           // System.out.println(row.get(i).getElementsByTag("td").get(0).text());
             if (row.get(i).getElementsByTag("td").get(0).text().toLowerCase().equals(sym.toLowerCase())) {
                 data[0] = row.get(i).getElementsByTag("td").get(0).text();
                 data[1] = row.get(i).getElementsByTag("td").get(1).text();
@@ -65,6 +67,14 @@ public class NepseAPI {
                 data[8] = row.get(i).getElementsByTag("td").get(8).text();
                 data[9] = row.get(i).getElementsByTag("td").get(9).text();
             }
+
+        }
+        if (NumberFormat.getNumberInstance(java.util.Locale.US).parse(data[9]).doubleValue() > 0) {
+            positive++;
+        } else if (NumberFormat.getNumberInstance(java.util.Locale.US).parse(data[9]).doubleValue() < 0) {
+            negative++;
+        } else {
+            neutral++;
         }
         System.out.println("-----------------------");
         System.out.println("Symbol:" + data[0]);
@@ -78,7 +88,5 @@ public class NepseAPI {
         System.out.println("No of Transaction:" + data[8]);
         System.out.println("Difference Rs.:" + data[9]);
         System.out.println("-----------------------");
-        return data;
-
     }
 }
