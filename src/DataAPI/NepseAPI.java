@@ -4,6 +4,8 @@ package DataAPI;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,8 +19,12 @@ public class NepseAPI {
     private static Element table;
     public static Elements head, company, row;
 
-    public NepseAPI() throws MalformedURLException {
-        url = new URL("https://www.nepalipaisa.com/StockLive.aspx");
+    public NepseAPI() {
+        try {
+            url = new URL("https://www.nepalipaisa.com/StockLive.aspx");
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(NepseAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 
