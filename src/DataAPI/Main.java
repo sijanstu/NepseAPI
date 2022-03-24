@@ -37,6 +37,8 @@ public class Main {
                         System.out.println("Market is open now");
                     } else {
                         System.out.println("market is closed now");
+                        System.out.println("market is closed now");
+
                     }
                 }
                 case "search" -> {
